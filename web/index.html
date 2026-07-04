@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentinelCVE - CPE/CVE Vulnerability Matcher</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="dark-theme">
+    <!-- Background Glow Elements -->
+    <div class="glow-sphere glow-sphere-1"></div>
+    <div class="glow-sphere glow-sphere-2"></div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>Sentinel<span>CVE</span></h2>
+                    <p>Securing Local Assets</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="history">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Scan History</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="database">
+                    <i class="fa-solid fa-database"></i>
+                    <span>NIST Database</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="pulse-dot green"></span>
+                    <span class="status-label">Scanner Ready</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="page-title-text">Dashboard</h1>
+                    <p id="page-subtitle-text">Real-time vulnerability mapping and asset auditing</p>
+                </div>
+                <div class="actions-group">
+                    <button class="btn btn-primary" id="btn-scan">
+                        <i class="fa-solid fa-radar"></i>
+                        <span>Start Scan</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Tab -->
+            <section class="tab-content active" id="tab-dashboard">
+                <!-- KPI Status Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Scanned Apps</h3>
+                            <p class="stat-value" id="stat-scanned">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-purple">
+                            <i class="fa-solid fa-tags"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Matched CPEs</h3>
+                            <p class="stat-value" id="stat-matched">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-orange">
+                            <i class="fa-solid fa-bug"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total CVEs</h3>
+                            <p class="stat-value text-red" id="stat-cves">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-red">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Critical / High</h3>
+                            <p class="stat-value text-orange" id="stat-critical">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Grid: Chart and Search Controls -->
+                <div class="details-layout">
+                    <!-- Chart Panel -->
+                    <div class="panel panel-chart">
+                        <div class="panel-header">
+                            <h2>Severity Distribution</h2>
+                        </div>
+                        <div class="panel-body chart-container">
+                            <div class="radial-progress-group">
+                                <div class="radial-item" style="--color: #ff3366; --percentage: 0;" id="radial-critical">
+                                    <div class="radial-circle">
+                                        <span class="radial-num">0</span>
+                                    </div>
+                                    <span class="radial-label">Critical</span>
+                                </div>
+                                <div class="radial-item" style="--color: #ff9933; --percentage: 0;" id="radial-high">
+                                    <div class="radial-circle">
+                                        <span class="radial-num">0</span>
+                                    </div>
+                                    <span class="radial-label">High</span>
+                                </div>
+                                <div class="radial-item" style="--color: #ffcc00; --percentage: 0;" id="radial-medium">
+                                    <div class="radial-circle">
+                                        <span class="radial-num">0</span>
+                                    </div>
+                                    <span class="radial-label">Medium</span>
+                                </div>
+                                <div class="radial-item" style="--color: #33cc66; --percentage: 0;" id="radial-low">
+                                    <div class="radial-circle">
+                                        <span class="radial-num">0</span>
+                                    </div>
+                                    <span class="radial-label">Low</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search panel -->
+                    <div class="panel panel-filters">
+                        <div class="panel-header">
+                            <h2>Search & Filters</h2>
+                        </div>
+                        <div class="panel-body filters-container">
+                            <div class="input-group">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                <input type="text" id="search-input" placeholder="Search by software name or publisher...">
+                            </div>
+                            <div class="filter-pills">
+                                <button class="pill active" data-filter="all">All</button>
+                                <button class="pill" data-filter="vulnerable">Vulnerable</button>
+                                <button class="pill" data-filter="secure">Secure</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software Scan Table -->
+                <div class="panel panel-table">
+                    <div class="panel-header table-header">
+                        <h2>Discovered Assets & Matches</h2>
+                        <span class="table-subtitle" id="table-status-label">No scan data loaded</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="scan-table" id="scan-results-table">
+                            <thead>
+                                <tr>
+                                    <th width="30"></th>
+                                    <th>Software Name</th>
+                                    <th>Publisher</th>
+                                    <th>Installed Version</th>
+                                    <th>Mapped CPE 2.3 Reference</th>
+                                    <th>Matches</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr>
+                                    <td colspan="7" class="text-center empty-state">
+                                        <i class="fa-solid fa-radar fa-spin"></i>
+                                        <p>Run a software scan to check for local vulnerabilities.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scan History Tab -->
+            <section class="tab-content" id="tab-history">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Previous Scans</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="history-list" id="history-items">
+                            <div class="text-center empty-state">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <p>No previous scans found in database.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Database Updater Tab -->
+            <section class="tab-content" id="tab-database">
+                <div class="db-update-layout">
+                    <!-- DB Stats Panel -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Database Inventory</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="db-stats-group">
+                                <div class="db-stat-item">
+                                    <span class="label">Total CPE Definitions</span>
+                                    <span class="value" id="db-total-cpes">0</span>
+                                </div>
+                                <div class="db-stat-item">
+                                    <span class="label">Total CVE Associations</span>
+                                    <span class="value" id="db-total-cves">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DB Sync panel -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Sync with NIST NVD Dictionary</h2>
+                        </div>
+                        <div class="panel-body">
+                            <p class="description-text">
+                                Synchronize your local database with official NIST NVD feeds to download new vulnerabilities and platform dictionary updates. Note: Full update fetches hundreds of megabytes and may take 2-5 minutes.
+                            </p>
+                            
+                            <div class="updater-status-box" id="updater-status">
+                                <div class="status-top">
+                                    <span class="status-badge" id="updater-badge">Idle</span>
+                                    <span class="status-time" id="updater-time">Never updated</span>
+                                </div>
+                                <p class="status-message" id="updater-message">Ready to synchronize.</p>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" id="updater-progress" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="updater-actions">
+                                <button class="btn btn-secondary" id="btn-update-db">
+                                    <i class="fa-solid fa-rotate"></i>
+                                    <span>Sync NIST Feeds</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal-overlay" id="cve-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Vulnerability Details: <span id="modal-app-name">App</span></h2>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-cve-list">
+                <!-- Dynamic Content Loaded Here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Script -->
+    <script src="/app.js"></script>
+</body>
+</html>
