@@ -18,7 +18,9 @@ PROJECT_FILES = [
     "web/app.js",
     "README.md",
     "github_uploader.py",
-    "run_upload.py"
+    "run_upload.py",
+    "assets/dashboard_mockup.jpg",
+    "assets/architecture_diagram.jpg"
 ]
 
 def upload_project(token, repo_name, username):
