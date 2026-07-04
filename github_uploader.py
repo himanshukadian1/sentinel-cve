@@ -20,7 +20,9 @@ PROJECT_FILES = [
     "github_uploader.py",
     "run_upload.py",
     "assets/dashboard_mockup.jpg",
-    "assets/architecture_diagram.jpg"
+    "assets/architecture_diagram.jpg",
+    "Dockerfile",
+    "render.yaml"
 ]
 
 def upload_project(token, repo_name, username):
