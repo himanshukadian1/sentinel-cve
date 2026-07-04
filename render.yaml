@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: sentinel-cve
+    env: python
+    buildCommand: pip install -r requirements.txt && python -c "from app.database import init_db; init_db()"
+    startCommand: uvicorn app.server:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
