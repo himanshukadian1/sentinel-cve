@@ -4,6 +4,8 @@
 
 SentinelCVE is an enhanced, production-ready reboot of the `SoftwareCPE-CVEMatcher` project. It introduces a high-performance local SQLite FTS5 search index, automated local asset scanning, automated NIST data synchronizers, and a state-of-the-art dark-mode glassmorphic web dashboard.
 
+![SentinelCVE Dashboard Mockup](assets/dashboard_mockup.jpg)
+
 ---
 
 ## Key Features
@@ -29,6 +31,8 @@ graph TD
     E --> D
     F[HTML5 / Vanilla CSS / JS Dashboard] <--> E
 ```
+
+![SentinelCVE Architecture Flowchart](assets/architecture_diagram.jpg)
 
 ---
 
